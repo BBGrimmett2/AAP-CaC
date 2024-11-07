@@ -1,0 +1,51 @@
+---
+- name: Import Automation Controller Configs
+  hosts: all
+  # hosts: aap-dev
+  gather_facts: false
+  vars:
+    # Overwrite for when testing locally
+    username: "USERNAME"
+    password: "PASSWORD"
+    import_controller_host: "IMPORT_CONTROLLER_HOST"
+    import_creds: false
+
+    filetree_dir: "/home/{{ ansible_user }}/ansible/CaC/filetree_output"
+
+    cac_files:
+      - current_credential_types.yaml
+      - current_settings.yaml
+      - organizations.yaml
+      - credentials.yaml
+      - projects.yaml
+      - current_execution_environments.yaml
+      - inventories.yaml
+      - inventory_sources.yaml
+      - hosts.yaml
+      - job_templates.yaml
+
+    controller_username: "{{ username }}"
+    controller_password: "{{ password }}"
+    controller_hostname: "{{ import_controller_host }}"
+    controller_validate_certs: false
+
+  pre_tasks:
+
+    - name: Load Vars
+      ansible.builtin.include_vars:
+        file: "{{ filetree_dir }}/{{ item }}"
+      loop: "{{ cac_files }}"
+
+  roles:
+    - {role: infra.controller_configuration.credential_types, when: controller_credential_types is defined}
+    - {role: infra.controller_configuration.settings, when: controller_settings is defined}
+    - {role: infra.controller_configuration.organizations, when: controller_organizations is defined}
+    - {role: infra.controller_configuration.credentials, when: import_creds and controller_credentials is defined, ignore_errors: true, no_log: false}
+    - {role: infra.controller_configuration.projects, when: controller_projects is defined}
+    - {role: infra.controller_configuration.execution_environments, when: controller_execution_environments is defined, ignore_errors: true}
+    - {role: infra.controller_configuration.inventories, when: controller_inventories is defined}
+    - {role: infra.controller_configuration.inventory_sources, when: controller_inventory_sources is defined}
+    - {role: infra.controller_configuration.hosts, when: controller_hosts is defined}
+    - {role: infra.controller_configuration.job_templates, when: controller_templates is defined}
+
+...

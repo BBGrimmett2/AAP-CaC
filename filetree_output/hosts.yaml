@@ -1,0 +1,51 @@
+---
+controller_hosts:
+  - name: "localhost"
+    description: ""
+    inventory: "Demo Inventory"
+    variables:
+      ansible_connection: local
+      ansible_python_interpreter: !unsafe '{{ ansible_playbook_python }}'
+  - name: "homelab"
+    description: ""
+    inventory: "Home"
+    variables:
+      ansible_host: 192.168.4.122
+      ansible_user: rriley
+  - name: "aap_24_controller_vm"
+    description: ""
+    inventory: "Controller"
+    variables:
+      ansible_host: 192.168.122.31
+      ansible_user: rriley
+  - name: "aap-dev"
+    description: ""
+    inventory: "Local VMs"
+    variables:
+      ansible_host: 192.168.122.141
+      ansible_user: rriley
+  - name: "fedora1"
+    description: ""
+    inventory: "Local VMs"
+    variables:
+      ansible_host: 192.168.122.64
+      ansible_user: rriley
+  - name: "node1"
+    description: ""
+    inventory: "Local VMs"
+    variables:
+      ansible_host: 192.168.122.160
+      ansible_user: rriley
+  - name: "win1"
+    description: ""
+    inventory: "swift-demo"
+    variables:
+      ansible_connection: psrp
+      ansible_host: ec2-107-22-18-218.compute-1.amazonaws.com
+      ansible_port: 5986
+      ansible_psrp_auth: ntlm
+      ansible_psrp_cert_validation: ignore
+      ansible_winrm_scheme: https
+      ansible_winrm_server_cert_validation: ignore
+      ansible_winrm_transport: ntlm
+...
