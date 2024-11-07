@@ -1,13 +1,13 @@
 ---
 - name: Output Automation Controller Configs
-  hosts: all
-  # hosts: aap-dev
+  # hosts: all
+  hosts: aap-dev
   gather_facts: false
   vars:
     # Overwrite for when testing locally
-    username: "USERNAME"
-    password: "PASSWORD"
-    export_controller_host: "EXPORT_CONTROLLER_HOST"
+    username: "rriley"
+    password: "fish"
+    export_controller_host: "192.168.122.31:8443"
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
