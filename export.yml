@@ -94,4 +94,34 @@
         regexp: "\\.\\.\\."
         state: absent
 
+    - name: Git Login [email]
+      ansible.builtin.command: "git config --global user.email \"rp.riley5@gmail.com\""
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Git Login [username]
+      ansible.builtin.command: "git config --global user.name \"rpriley5\""
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Git stage
+      ansible.builtin.command: "git add ."
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Git commit
+      ansible.builtin.command: "git commit -m \"auto-commit by AAP\""
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Git push
+      ansible.builtin.command: "git push origin main"
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
 ...
