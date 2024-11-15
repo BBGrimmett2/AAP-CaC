@@ -34,7 +34,7 @@
 
     - name: Git push
       # ansible.builtin.command: "git push origin main"
-      ansible.builtin.command: "git push https://rpriley5:mPTKu-M6fish@github.com/rpriley5/CaC.git"
+      ansible.builtin.command: "git push https://rpriley5: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@github.com/rpriley5/CaC.git"
       args:
         chdir: "/home/{{ ansible_user }}/ansible/CaC"
       changed_when: true
