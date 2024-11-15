@@ -1,0 +1,42 @@
+---
+- name: Test
+  hosts: aap-dev
+  gather_facts: false
+
+  tasks:
+    - name: Git Login [username]
+      ansible.builtin.command: "git config --global user.name \"rpriley5\""
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Git Login [email]
+      ansible.builtin.command: "git config --global user.email \"rp.riley5@gmail.com\""
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Git stage
+      ansible.builtin.command: "git add ."
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Git commit
+      ansible.builtin.command: "git commit -m \"auto-commit by AAP\""
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ ansible_user }}"
+
+    - name: Git push
+      # ansible.builtin.command: "git push origin main"
+      ansible.builtin.command: "git push https://rpriley5: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@github.com/rpriley5/CaC.git"
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+# some editeedfd
