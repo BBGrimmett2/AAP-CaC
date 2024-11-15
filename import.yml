@@ -3,17 +3,6 @@
   hosts: all
   # hosts: aap-dev
   gather_facts: false
-  vars_files:
-    - ./filetree_ouput/current_credential_types.yaml
-    - ./filetree_ouput/current_settings.yaml
-    - ./filetree_ouput/organizations.yaml
-    - ./filetree_ouput/credentials.yaml
-    - ./filetree_ouput/projects.yaml
-    - ./filetree_ouput/current_execution_environments.yaml
-    - ./filetree_ouput/inventories.yaml
-    - ./filetree_ouput/inventory_sources.yaml
-    - ./filetree_ouput/hosts.yaml
-    - ./filetree_ouput/job_templates.yaml
   vars:
     # Overwrite for when testing locally
     username: "USERNAME"
@@ -21,31 +10,44 @@
     import_controller_host: "IMPORT_CONTROLLER_HOST"
     import_creds: false
 
-    # filetree_dir: "/home/{{ ansible_user }}/ansible/CaC/filetree_output"
+    filetree_parent_dir: "/home/{{ ansible_user }}/aap/controller/data/projects"
 
-    # cac_files:
-    #   - current_credential_types.yaml
-    #   - current_settings.yaml
-    #   - organizations.yaml
-    #   - credentials.yaml
-    #   - projects.yaml
-    #   - current_execution_environments.yaml
-    #   - inventories.yaml
-    #   - inventory_sources.yaml
-    #   - hosts.yaml
-    #   - job_templates.yaml
+    cac_files:
+      - current_credential_types.yaml
+      - current_settings.yaml
+      - organizations.yaml
+      - credentials.yaml
+      - projects.yaml
+      - current_execution_environments.yaml
+      - inventories.yaml
+      - inventory_sources.yaml
+      - hosts.yaml
+      - job_templates.yaml
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
     controller_hostname: "{{ import_controller_host }}"
     controller_validate_certs: false
 
-  # pre_tasks:
+  pre_tasks:
 
-    # - name: Load Vars
-    #   ansible.builtin.include_vars:
-    #     file: "{{ filetree_dir }}/{{ item }}"
-    #   loop: "{{ cac_files }}"
+    - name: Find the 'filetree_output' directory
+      ansible.builtin.find:
+        paths: "{{ filetree_parent_dir }}"
+        recurse: true
+        file_type: directory
+        patterns: "filetree_output"
+      register: found_dirs
+
+    - name: Store the first found directory in a variable
+      ansible.builtin.set_fact:
+        filetree_output_path: "{{ found_dirs.files[0].path }}"
+      when: found_dirs.matched > 0
+
+    - name: Load Vars
+      ansible.builtin.include_vars:
+        file: "{{ filetree_output_path }}/{{ item }}"
+      loop: "{{ cac_files }}"
 
   roles:
     - {role: infra.controller_configuration.credential_types, when: controller_credential_types is defined}
