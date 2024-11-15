@@ -49,10 +49,10 @@
     #     filetree_output_path: "{{ found_dirs.files[0].path }}"
     #   when: found_dirs.matched > 0
 
-    # - name: Load Vars
-    #   ansible.builtin.include_vars:
-    #     file: "{{ filetree_output_path }}/{{ item }}"
-    #   loop: "{{ cac_files }}"
+    - name: Load Vars
+      ansible.builtin.include_vars:
+        file: "/home/rriley/aap/controller/data/projects/_22__cac/filetree_output/{{ item }}"
+      loop: "{{ cac_files }}"
 
   roles:
     - {role: infra.controller_configuration.credential_types, when: controller_credential_types is defined}
