@@ -1,7 +1,7 @@
 ---
 - name: Output Automation Controller Configs
-  # hosts: all
-  hosts: aap-dev
+  hosts: all
+  # hosts: aap-dev
   gather_facts: false
   vars:
     # Overwrite for when testing locally
