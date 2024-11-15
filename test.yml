@@ -4,11 +4,17 @@
   gather_facts: false
 
   tasks:
-    # - name: Git Login [username]
-    #   ansible.builtin.command: "git config --global user.name \"rpriley5\""
-    #   args:
-    #     chdir: "/home/{{ ansible_user }}/ansible/CaC"
-    #   changed_when: true
+    - name: Git Login [username]
+      ansible.builtin.command: "git config --global user.name \"rpriley5\""
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
+
+    - name: Git Login [username]
+      ansible.builtin.command: "git config --global user.email \"rp.riley5@gmail.com\""
+      args:
+        chdir: "/home/{{ ansible_user }}/ansible/CaC"
+      changed_when: true
 
     - name: Git stage
       ansible.builtin.command: "git add ."
