@@ -4,13 +4,13 @@
   # hosts: aap-dev
   gather_facts: false
   vars_files:
-    - filetree_output
+    - "filetree_output"
   vars:
     # Overwrite for when testing locally
-    username: "USERNAME"
-    password: "PASSWORD"
-    import_controller_host: "IMPORT_CONTROLLER_HOST"
-    import_creds: false
+    # username: "USERNAME"
+    # password: "PASSWORD"
+    # import_controller_host: "IMPORT_CONTROLLER_HOST"
+    # import_creds: false
 
     # filetree_dir: "/home/{{ ansible_user }}/ansible/CaC/filetree_output"
 

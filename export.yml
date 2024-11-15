@@ -124,5 +124,6 @@
       args:
         chdir: "/home/{{ ansible_user }}/ansible/CaC"
       changed_when: true
+      ignore_errors: true
 
 ...
