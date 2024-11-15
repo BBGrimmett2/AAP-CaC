@@ -10,7 +10,7 @@
         chdir: "/home/{{ ansible_user }}/ansible/CaC"
       changed_when: true
 
-    - name: Git Login [username]
+    - name: Git Login [email]
       ansible.builtin.command: "git config --global user.email \"rp.riley5@gmail.com\""
       args:
         chdir: "/home/{{ ansible_user }}/ansible/CaC"
