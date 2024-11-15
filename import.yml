@@ -4,22 +4,22 @@
   # hosts: aap-dev
   gather_facts: false
   vars_files:
-    - filetree_ouput/current_credential_types.yaml
-    - filetree_ouput/current_settings.yaml
-    - filetree_ouput/organizations.yaml
-    - filetree_ouput/credentials.yaml
-    - filetree_ouput/projects.yaml
-    - filetree_ouput/current_execution_environments.yaml
-    - filetree_ouput/inventories.yaml
-    - filetree_ouput/inventory_sources.yaml
-    - filetree_ouput/hosts.yaml
-    - jfiletree_ouput/ob_templates.yaml
+    - ../filetree_ouput/current_credential_types.yaml
+    - ../filetree_ouput/current_settings.yaml
+    - ../filetree_ouput/organizations.yaml
+    - ../filetree_ouput/credentials.yaml
+    - ../filetree_ouput/projects.yaml
+    - ../filetree_ouput/current_execution_environments.yaml
+    - ../filetree_ouput/inventories.yaml
+    - ../filetree_ouput/inventory_sources.yaml
+    - ../filetree_ouput/hosts.yaml
+    - ../filetree_ouput/ob_templates.yaml
   vars:
     # Overwrite for when testing locally
-    # username: "USERNAME"
-    # password: "PASSWORD"
-    # import_controller_host: "IMPORT_CONTROLLER_HOST"
-    # import_creds: false
+    username: "USERNAME"
+    password: "PASSWORD"
+    import_controller_host: "IMPORT_CONTROLLER_HOST"
+    import_creds: false
 
     # filetree_dir: "/home/{{ ansible_user }}/ansible/CaC/filetree_output"
 
@@ -40,7 +40,7 @@
     controller_hostname: "{{ import_controller_host }}"
     controller_validate_certs: false
 
-  pre_tasks:
+  # pre_tasks:
 
     # - name: Load Vars
     #   ansible.builtin.include_vars:
