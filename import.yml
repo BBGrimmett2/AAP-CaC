@@ -3,6 +3,8 @@
   hosts: all
   # hosts: aap-dev
   gather_facts: false
+  vars_files:
+    - /home/rriley/aap/controller/data/projects/_22__cac/filetree_output/current_credential_types.yaml
   vars:
     # Overwrite for when testing locally
     username: "USERNAME"
@@ -29,30 +31,30 @@
     controller_hostname: "{{ import_controller_host }}"
     controller_validate_certs: false
 
-  pre_tasks:
+  # pre_tasks:
 
-    - name: Find the 'filetree_output' directory
-      ansible.builtin.find:
-        paths: "{{ filetree_parent_dir }}"
-        recurse: true
-        file_type: directory
-        patterns: "filetree_output"
-      register: found_dirs
-      delegate_to: localhost
+  #   - name: Find the 'filetree_output' directory
+  #     ansible.builtin.find:
+  #       paths: "{{ filetree_parent_dir }}"
+  #       recurse: true
+  #       file_type: directory
+  #       patterns: "filetree_output"
+  #     register: found_dirs
+  #     delegate_to: localhost
 
-    - name: Debug;
-      debug:
-        msg: "{{ found_dirs }}"
+  #   - name: Debug;
+  #     debug:
+  #       msg: "{{ found_dirs }}"
 
     # - name: Store the first found directory in a variable
     #   ansible.builtin.set_fact:
     #     filetree_output_path: "{{ found_dirs.files[0].path }}"
     #   when: found_dirs.matched > 0
 
-    - name: Load Vars
-      ansible.builtin.include_vars:
-        file: "/home/rriley/aap/controller/data/projects/_22__cac/filetree_output/{{ item }}"
-      loop: "{{ cac_files }}"
+    # - name: Load Vars
+    #   ansible.builtin.include_vars:
+    #     file: "/home/rriley/aap/controller/data/projects/_22__cac/filetree_output/{{ item }}"
+    #   loop: "{{ cac_files }}"
 
   roles:
     - {role: infra.controller_configuration.credential_types, when: controller_credential_types is defined}
