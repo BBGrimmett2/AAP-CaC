@@ -38,6 +38,7 @@
         file_type: directory
         patterns: "filetree_output"
       register: found_dirs
+      delegate_to: localhost
 
     - name: Debug;
       debug:
