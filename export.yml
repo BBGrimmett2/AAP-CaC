@@ -5,9 +5,9 @@
   gather_facts: false
   vars:
     # Overwrite for when testing locally
-    username: "rriley"
-    password: "fish"
-    export_controller_host: "192.168.122.31:8443"
+    # username: "rriley"
+    # password: "fish"
+    # export_controller_host: "192.168.122.31:8443"
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"

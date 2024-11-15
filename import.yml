@@ -3,6 +3,8 @@
   hosts: all
   # hosts: aap-dev
   gather_facts: false
+  vars_files:
+    - filetree_output
   vars:
     # Overwrite for when testing locally
     username: "USERNAME"
@@ -10,19 +12,19 @@
     import_controller_host: "IMPORT_CONTROLLER_HOST"
     import_creds: false
 
-    filetree_dir: "/home/{{ ansible_user }}/ansible/CaC/filetree_output"
+    # filetree_dir: "/home/{{ ansible_user }}/ansible/CaC/filetree_output"
 
-    cac_files:
-      - current_credential_types.yaml
-      - current_settings.yaml
-      - organizations.yaml
-      - credentials.yaml
-      - projects.yaml
-      - current_execution_environments.yaml
-      - inventories.yaml
-      - inventory_sources.yaml
-      - hosts.yaml
-      - job_templates.yaml
+    # cac_files:
+    #   - current_credential_types.yaml
+    #   - current_settings.yaml
+    #   - organizations.yaml
+    #   - credentials.yaml
+    #   - projects.yaml
+    #   - current_execution_environments.yaml
+    #   - inventories.yaml
+    #   - inventory_sources.yaml
+    #   - hosts.yaml
+    #   - job_templates.yaml
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
@@ -31,10 +33,10 @@
 
   pre_tasks:
 
-    - name: Load Vars
-      ansible.builtin.include_vars:
-        file: "{{ filetree_dir }}/{{ item }}"
-      loop: "{{ cac_files }}"
+    # - name: Load Vars
+    #   ansible.builtin.include_vars:
+    #     file: "{{ filetree_dir }}/{{ item }}"
+    #   loop: "{{ cac_files }}"
 
   roles:
     - {role: infra.controller_configuration.credential_types, when: controller_credential_types is defined}
