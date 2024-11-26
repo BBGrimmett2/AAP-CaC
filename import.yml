@@ -31,7 +31,11 @@
     controller_hostname: "{{ import_controller_host }}"
     controller_validate_certs: false
 
-  # pre_tasks:
+  pre_tasks:
+
+    - name: Debug;
+      debug:
+        msg: "{{ controller_settings }}"
 
   #   - name: Find the 'filetree_output' directory
   #     ansible.builtin.find:
