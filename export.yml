@@ -1,20 +1,14 @@
 ---
 - name: Output Automation Controller Configs
   hosts: all
-  # hosts: aap-dev
   gather_facts: false
   vars:
-    # Overwrite for when testing locally
-    # username: "rriley"
-    # password: "fish"
-    # export_controller_host: "192.168.122.31:8443"
-
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
     controller_hostname: "{{ export_controller_host }}"
     controller_validate_certs: "false"
     controller_api_plugin: awx.awx.controller_api
-    output_path: "/home/{{ ansible_user }}/ansible/CaC/filetree_output"
+    output_path: "/home/{{ ansible_user }}/ansible/CaC/group_vars/all"
 
     flatten_output: true
 
