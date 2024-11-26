@@ -4,9 +4,9 @@
   gather_facts: false
   vars:
     # Overwrite for when testing locally or attach tower creds to overwrite
-    # username: "USERNAME"
-    # password: "PASSWORD"
-    # export_controller_host: "EXPORT_CONTROLLER_HOST"
+    username: "USERNAME"
+    password: "PASSWORD"
+    export_controller_host: "EXPORT_CONTROLLER_HOST"
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
