@@ -1,13 +1,12 @@
 ---
 - name: Output Automation Controller Configs
   hosts: all
-  # hosts: aap-dev
   gather_facts: false
   vars:
-    # Overwrite for when testing locally
-    # username: "rriley"
-    # password: "fish"
-    # export_controller_host: "192.168.122.31:8443"
+    # Overwrite for when testing locally or attach tower creds to overwrite
+    # username: "USERNAME"
+    # password: "PASSWORD"
+    # export_controller_host: "EXPORT_CONTROLLER_HOST"
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
@@ -94,23 +93,26 @@
         regexp: "\\.\\.\\."
         state: absent
 
-    - name: Git Login [username]
+    - name: Git Configure [username]
       ansible.builtin.command: "git config --global user.name \"rpriley5\""
       args:
         chdir: "/home/{{ ansible_user }}/ansible/CaC"
-      changed_when: true
+      register: git_username_config_output
+      changed_when: git_username_config_output.rc != 0
 
-    - name: Git Login [email]
+    - name: Git Configure [email]
       ansible.builtin.command: "git config --global user.email \"rp.riley5@gmail.com\""
       args:
         chdir: "/home/{{ ansible_user }}/ansible/CaC"
-      changed_when: true
+      register: git_email_config_output
+      changed_when: git_email_config_output.rc != 0
 
     - name: Git stage
       ansible.builtin.command: "git add ."
       args:
         chdir: "/home/{{ ansible_user }}/ansible/CaC"
-      changed_when: true
+      register: git_stage_output
+      changed_when: git_stage_output.rc != 0
 
     - name: Git Commit and Push
       block:
