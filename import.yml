@@ -3,8 +3,8 @@
   hosts: all
   # hosts: aap-dev
   gather_facts: false
-  vars_files:
-    - "/home/rriley/aap/controller/data/projects/_22__cac/filetree_output/current_credential_types.yaml"
+  # vars_files:
+  #   - "/home/rriley/aap/controller/data/projects/_22__cac/filetree_output/current_credential_types.yaml"
   vars:
     # Overwrite for when testing locally
     username: "USERNAME"
