@@ -5,9 +5,9 @@
   gather_facts: false
   vars:
     # Overwrite for when testing locally
-    username: "rriley"
-    password: "fish"
-    export_controller_host: "192.168.122.31:8443"
+    # username: "rriley"
+    # password: "fish"
+    # export_controller_host: "192.168.122.31:8443"
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
@@ -118,14 +118,16 @@
           ansible.builtin.command: "git commit -m \"auto-commit by AAP\""
           args:
             chdir: "/home/{{ ansible_user }}/ansible/CaC"
-          changed_when: true
+          register: commit_output
+          changed_when: commit_output.rc != 1
 
         - name: Git push
           # ansible.builtin.command: "git push origin main"
           ansible.builtin.command: "git push git@github.com:rpriley5/CaC.git"
           args:
             chdir: "/home/{{ ansible_user }}/ansible/CaC"
-          changed_when: true
+          register: push_output
+          changed_when: push_output.rc != 0
       ignore_errors: true
 
 ...
