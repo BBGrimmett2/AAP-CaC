@@ -15,7 +15,7 @@
     controller_validate_certs: false
 
   roles:
-    - {role: infra.controller_configuration.credential_types}
+    - {role: infra.controller_configuration.credential_types, when: controller_credential_types is defined}
     - {role: infra.controller_configuration.settings, when: controller_settings is defined}
     - {role: infra.controller_configuration.organizations, when: controller_organizations is defined}
     - {role: infra.controller_configuration.credentials, when: import_creds and controller_credentials is defined, ignore_errors: true, no_log: false}
