@@ -112,18 +112,20 @@
         chdir: "/home/{{ ansible_user }}/ansible/CaC"
       changed_when: true
 
-    - name: Git commit
-      ansible.builtin.command: "git commit -m \"auto-commit by AAP\""
-      args:
-        chdir: "/home/{{ ansible_user }}/ansible/CaC"
-      changed_when: true
+    - name: Git Commit and Push
+      block:
+        - name: Git Commit
+          ansible.builtin.command: "git commit -m \"auto-commit by AAP\""
+          args:
+            chdir: "/home/{{ ansible_user }}/ansible/CaC"
+          changed_when: true
 
-    - name: Git push
-      # ansible.builtin.command: "git push origin main"
-      ansible.builtin.command: "git push git@github.com:rpriley5/CaC.git"
-      args:
-        chdir: "/home/{{ ansible_user }}/ansible/CaC"
-      changed_when: true
+        - name: Git push
+          # ansible.builtin.command: "git push origin main"
+          ansible.builtin.command: "git push git@github.com:rpriley5/CaC.git"
+          args:
+            chdir: "/home/{{ ansible_user }}/ansible/CaC"
+          changed_when: true
       ignore_errors: true
 
 ...
