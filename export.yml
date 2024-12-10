@@ -1,22 +1,24 @@
 ---
 - name: Output Automation Controller Configs
-  hosts: all
+  hosts: aap-dev
   gather_facts: false
   vars:
     # Overwrite for when testing locally or attach tower creds to overwrite
-    username: "USERNAME"
-    password: "PASSWORD"
-    export_controller_host: "EXPORT_CONTROLLER_HOST"
+    username: "rriley"
+    password: "fish"
+    export_controller_host: "192.168.122.31:8443"
+    controller_version: "2.4"
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
     controller_hostname: "{{ export_controller_host }}"
     controller_validate_certs: "false"
-    # controller_api_plugin: awx.awx.controller_api
-    controller_api_plugin: ansible.controller.controller_api
+    controller_api_plugin: awx.awx.controller_api
+    #controller_api_plugin: ansible.controller.controller_api
     output_path: "/home/{{ ansible_user }}/ansible/CaC/group_vars/all"
 
     flatten_output: true
+
 
   pre_tasks:
 
@@ -28,9 +30,9 @@
       block:
         - name: "Get the Authentication Token for the future requests"
           ansible.builtin.uri:
-            url: "https://{{ controller_hostname }}/api/controller/v2/tokens/"
-            user: "{{ controller_username }}"
-            password: "{{ controller_password }}"
+            url: "https://{{ controller_hostname }}/api/v2/tokens/"
+            user: "{{ username }}"
+            password: "{{ password }}"
             method: POST
             force_basic_auth: true
             validate_certs: "{{ controller_validate_certs }}"
@@ -48,14 +50,14 @@
         state: absent
 
   roles:
-    - infra.controller_configuration.filetree_create
+    - {role: infra.controller_configuration.filetree_create, when: controller_version == "2.4"}
 
   post_tasks:
     - name: "Delete the Authentication Token used"
       ansible.builtin.uri:
         url: "https://{{ controller_hostname }}{{ controller_oauthtoken_url }}"
-        user: "{{ controller_username }}"
-        password: "{{ controller_password }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
         method: DELETE
         force_basic_auth: true
         validate_certs: "{{ controller_validate_certs }}"

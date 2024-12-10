@@ -1,0 +1,11 @@
+---
+controller_applications:
+  - name: "AAP API"
+    description: ""
+    organization: "Default"
+    authorization_grant_type: "password"
+    redirect_uris: ""
+    skip_authorization: "False"
+    client_id: "n9QifBsTCvipScbF8BtGkfFnANP9nquXL2xvQ7B2"
+    client_type: "public"
+...

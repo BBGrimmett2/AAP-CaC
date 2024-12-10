@@ -1,0 +1,496 @@
+---
+controller_templates:
+  - name: "Get Home Network Facts"
+    description: ""
+    organization: "Default"
+    project: "rriley-dev"
+    inventory: "Home"
+    playbook: "hosts_facts.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "homelab-creds"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Monthly Hosts Report"
+    description: ""
+    organization: "Default"
+    project: "rriley-dev"
+    inventory: "Demo Inventory"
+    playbook: "get_host_metrics.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Automation Controller API Key"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: true
+    survey_spec:
+      description: ""
+      name: ""
+      spec:
+      - choices: ""
+        default: 10-01-2024
+        max: 10
+        min: 0
+        new_question: true
+        question_description: Will return hosts that have been automated since that date
+        question_name: Query Date (mm-dd-YYY)
+        required: true
+        type: text
+        variable: filter_date
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Create EE and Push to PAH"
+    description: "This job will take a folder name and build an EE and push it to PAH"
+    organization: "Default"
+    project: "rriley-dev"
+    inventory: "Local VMs"
+    playbook: "create_ee.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "aap-dev"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "local_vms"
+      - "PAH Creds"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "quay_rriley_ee"
+    host_config_key: ""
+    survey_enabled: true
+    survey_spec:
+      description: ""
+      name: ""
+      spec:
+      - choices: ""
+        default: rriley_ee
+        max: 1024
+        min: 0
+        new_question: false
+        question_description: Provide sub directory that EE code lives in, assuming that parent directory is /home/rriley/EE/
+        question_name: Sub-directory Name
+        required: true
+        type: text
+        variable: sub_dir
+      - choices: ""
+        default: 192.168.122.31:8444
+        max: 1024
+        min: 0
+        new_question: true
+        question_description: ""
+        question_name: Private Automation Hub Hostname
+        required: false
+        type: text
+        variable: pah_hostname
+      - choices: ""
+        default: ""
+        max: 1024
+        min: 0
+        new_question: false
+        question_description: Name for the new EE
+        question_name: EE Image Name
+        required: true
+        type: text
+        variable: tag_name
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Get Host OS"
+    description: ""
+    organization: "Default"
+    project: "rriley-dev"
+    inventory: "windows"
+    playbook: "hosts_facts.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "aws-windows"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Create User"
+    description: ""
+    organization: "Default"
+    project: "rriley-dev"
+    inventory: "windows"
+    playbook: "create_user.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "aws-windows"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "quay_rriley_ee"
+    host_config_key: ""
+    survey_enabled: true
+    survey_spec:
+      description: ""
+      name: ""
+      spec:
+      - choices: ""
+        default: ""
+        max: 1024
+        min: 0
+        new_question: true
+        question_description: ""
+        question_name: Username
+        required: true
+        type: text
+        variable: username
+      - choices: ""
+        default: ""
+        max: 1024
+        min: 0
+        new_question: false
+        question_description: Password must be 8 characters long, with at least one integer and one special character.
+        question_name: Password
+        required: true
+        type: password
+        variable: password
+      - choices:
+        - Administrators
+        - temp
+        default: ""
+        max: 1024
+        min: 0
+        new_question: false
+        question_description: ""
+        question_name: Groups
+        required: false
+        type: multiselect
+        variable: win_groups
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Install App"
+    description: ""
+    organization: "Default"
+    project: "rriley-dev"
+    inventory: "Local VMs"
+    playbook: "app_install.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "fedora1"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "local_vms"
+      - "rriley_git_pat"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "quay_rriley_ee"
+    host_config_key: ""
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Setup Shared Image Store"
+    description: ""
+    organization: "Default"
+    project: "ansible-development"
+    inventory: "Local VMs"
+    playbook: "ansiblesharedimage.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "aap-dev"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "local_vms"
+      - "RH Creds"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "quay_rriley_ee"
+    host_config_key: ""
+    survey_enabled: true
+    survey_spec:
+      description: ""
+      name: ""
+      spec:
+      - choices: ""
+        default: quay.io/rh-ee-ryariley/rriley_ee
+        max: 1024
+        min: 0
+        new_question: false
+        question_description: ""
+        question_name: Image
+        required: true
+        type: text
+        variable: ansible_image
+      - choices: ""
+        default: /var/lib/rriley_ee
+        max: 1024
+        min: 0
+        new_question: true
+        question_description: ""
+        question_name: Directory
+        required: true
+        type: text
+        variable: additionalimagestores
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Setup AAP Dev Server"
+    description: ""
+    organization: "Default"
+    project: "ansible-development"
+    inventory: "Local VMs"
+    playbook: "ansibleremoteserver.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "aap-dev"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "local_vms"
+      - "RH Creds"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: true
+    survey_spec:
+      description: ""
+      name: ""
+      spec:
+      - choices: ""
+        default: rriley
+        max: 1024
+        min: 0
+        new_question: false
+        question_description: ""
+        question_name: Dev Server Username
+        required: true
+        type: text
+        variable: dev_user
+      - choices: ""
+        default: quay.io/rh-ee-ryariley/rriley_ee
+        max: 1024
+        min: 0
+        new_question: true
+        question_description: ""
+        question_name: Image
+        required: true
+        type: text
+        variable: ansible_image
+      - choices: ""
+        default: 384ff7382de624fb94dbaf6da11977bba1ecd427
+        max: 1024
+        min: 0
+        new_question: true
+        question_description: ""
+        question_name: Commit ID
+        required: true
+        type: text
+        variable: commit_id
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
