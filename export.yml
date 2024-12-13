@@ -6,15 +6,17 @@
     # Overwrite for when testing locally or attach tower creds to overwrite
     username: "rriley"
     password: "fish"
+    # export_controller_host: "192.168.122.124"
     export_controller_host: "192.168.122.31:8443"
     controller_version: "2.4"
+    # Get the inventories from the API
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
     controller_hostname: "{{ export_controller_host }}"
     controller_validate_certs: "false"
     controller_api_plugin: awx.awx.controller_api
-    #controller_api_plugin: ansible.controller.controller_api
+    # controller_api_plugin: ansible.controller.controller_api
     output_path: "/home/{{ ansible_user }}/ansible/CaC/group_vars/all"
 
     flatten_output: true
@@ -22,15 +24,25 @@
 
   pre_tasks:
 
+    - name: Set API Endpoint fact v2.4
+      ansible.builtin.set_fact:
+        endpoint: /api/v2/tokens/
+      when: controller_version == "2.4"
+
+    - name: Set API Endpoint fact v2.5
+      ansible.builtin.set_fact:
+        endpoint: /api/controller/v2/tokens/
+      when: controller_version == "2.5"
+
     - name: "Setup authentication (block)"
       no_log: "{{ controller_configuration_filetree_create_secure_logging | default('false') }}"
       when: controller_oauthtoken is not defined
       tags:
         - always
       block:
-        - name: "Get the Authentication Token for the future requests"
+        - name: "Get the Authentication Token for the future requests v2.4"
           ansible.builtin.uri:
-            url: "https://{{ controller_hostname }}/api/v2/tokens/"
+            url: "https://{{ controller_hostname }}{{ endpoint }}"
             user: "{{ username }}"
             password: "{{ password }}"
             method: POST
@@ -38,6 +50,10 @@
             validate_certs: "{{ controller_validate_certs }}"
             status_code: 201
           register: authtoken_res
+
+        - name: Debug;
+          debug:
+            msg: "{{ authtoken_res }}"
 
         - name: "Set the oauth token to be used since now"
           ansible.builtin.set_fact:
@@ -50,7 +66,7 @@
         state: absent
 
   roles:
-    - {role: infra.controller_configuration.filetree_create, when: controller_version == "2.4"}
+    - infra.controller_configuration.filetree_create
 
   post_tasks:
     - name: "Delete the Authentication Token used"
