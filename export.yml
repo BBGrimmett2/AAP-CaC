@@ -3,13 +3,7 @@
   hosts: aap-dev
   gather_facts: false
   vars:
-    # Overwrite for when testing locally or attach tower creds to overwrite
-    username: "USERNAME"
-    password: "PASSWORD"
-    # export_controller_host: "192.168.122.124"
-    export_controller_host: "192.168.122.31:8443"
     controller_version: "2.4"
-    # Get the inventories from the API
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
