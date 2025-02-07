@@ -4,8 +4,8 @@
   gather_facts: false
   vars:
     # Overwrite for when testing locally or attach tower creds to overwrite
-    username: "rriley"
-    password: "fish"
+    username: "USERNAME"
+    password: "PASSWORD"
     # export_controller_host: "192.168.122.124"
     export_controller_host: "192.168.122.31:8443"
     controller_version: "2.4"
