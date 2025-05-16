@@ -3,9 +3,9 @@
   hosts: aap-dev
   gather_facts: false
   vars:
-    aap_username: "rriley"
+    aap_username: ""
     aap_password: ""
-    aap_hostname: "192.168.122.124"
+    aap_hostname: ""
     aap_validate_certs: "false"
     controller_validate_certs: "false"
     output_path: "/home/rriley/ansible/CaC/group_vars/all"
