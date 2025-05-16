@@ -87,4 +87,10 @@
         regexp: "\\.\\.\\."
         state: absent
 
+    # - name: Insert blank line before any instance of "- name:"
+    #   ansible.builtin.replace:
+    #     path: "{{ output_path }}/eda_credential_types.yaml"
+    #     regexp: '(^|\n)(\s*)- name:'
+    #     replace: '\1\2\n\2- name:'
+
 ...
