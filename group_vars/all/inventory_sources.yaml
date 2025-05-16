@@ -1,9 +1,10 @@
 ---
 controller_inventory_sources:
   - name: "win_git_source"
-    description: ""
+    description: !unsafe ''
     organization: "Default"
     source: "scm"
+    limit: ""
     source_project: "rriley-dev"
     source_path: "windows-inventory.ini"
     inventory: "windows"

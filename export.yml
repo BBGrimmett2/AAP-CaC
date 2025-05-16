@@ -3,152 +3,44 @@
   hosts: aap-dev
   gather_facts: false
   vars:
-    # Overwrite for when testing locally or attach tower creds to overwrite
-    username: "rriley"
-    password: "fish"
-    # export_controller_host: "192.168.122.124"
-    export_controller_host: "192.168.122.31:8443"
-    controller_version: "2.4"
-    # Get the inventories from the API
-
-    controller_username: "{{ username }}"
-    controller_password: "{{ password }}"
-    controller_hostname: "{{ export_controller_host }}"
+    aap_username: "rriley"
+    aap_password: ""
+    aap_hostname: "192.168.122.124"
+    aap_validate_certs: "false"
     controller_validate_certs: "false"
-    controller_api_plugin: awx.awx.controller_api
-    # controller_api_plugin: ansible.controller.controller_api
-    output_path: "/home/{{ ansible_user }}/ansible/CaC/group_vars/all"
-
+    output_path: "/home/rriley/ansible/CaC/group_vars/all"
     flatten_output: true
 
-
   pre_tasks:
-
-    - name: Set API Endpoint fact v2.4
-      ansible.builtin.set_fact:
-        endpoint: /api/v2/tokens/
-      when: controller_version == "2.4"
-
-    - name: Set API Endpoint fact v2.5
-      ansible.builtin.set_fact:
-        endpoint: /api/controller/v2/tokens/
-      when: controller_version == "2.5"
-
     - name: "Setup authentication (block)"
       no_log: "{{ controller_configuration_filetree_create_secure_logging | default('false') }}"
-      when: controller_oauthtoken is not defined
+      when: aap_oauthtoken is not defined
       tags:
         - always
       block:
-        - name: "Get the Authentication Token for the future requests v2.4"
+        - name: "Get the Authentication Token for the future requests"
           ansible.builtin.uri:
-            url: "https://{{ controller_hostname }}{{ endpoint }}"
-            user: "{{ username }}"
-            password: "{{ password }}"
+            url: "https://{{ aap_hostname }}/api/gateway/v1/tokens/"
+            user: "{{ aap_username }}"
+            password: "{{ aap_password }}"
             method: POST
             force_basic_auth: true
-            validate_certs: "{{ controller_validate_certs }}"
+            validate_certs: "{{ aap_validate_certs }}"
             status_code: 201
           register: authtoken_res
 
-        - name: Debug;
-          debug:
-            msg: "{{ authtoken_res }}"
-
         - name: "Set the oauth token to be used since now"
           ansible.builtin.set_fact:
+            aap_oauthtoken: "{{ authtoken_res.json.token }}"
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
-            controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
-
-    - name: Recursively remove output directory
-      ansible.builtin.file:
-        path: "{{ output_path }}"
-        state: absent
+            aap_oauthtoken_url: "{{ authtoken_res.json.url }}"
+      
+        - name: Recursively remove output directory
+          ansible.builtin.file:
+            path: "{{ output_path }}"
+            state: absent
 
   roles:
-    - infra.controller_configuration.filetree_create
-
-  post_tasks:
-    - name: "Delete the Authentication Token used"
-      ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}{{ controller_oauthtoken_url }}"
-        user: "{{ username }}"
-        password: "{{ password }}"
-        method: DELETE
-        force_basic_auth: true
-        validate_certs: "{{ controller_validate_certs }}"
-        status_code: 204
-      when: controller_oauthtoken_url is defined
-
-    - name: Read hosts.yaml file into variable
-      ansible.builtin.slurp:
-        src: "{{ output_path }}/hosts.yaml"
-      register: file_content
-
-    - name: Decode file content from base64
-      ansible.builtin.set_fact:
-        decoded_content: "{{ file_content.content | b64decode }}"
-
-    - name: Remove all occurrences of '---\ncontroller_hosts:'
-      ansible.builtin.set_fact:
-        updated_content: "{{ decoded_content | regex_replace('---\ncontroller_hosts:\n', '') }}"
-
-    - name: Add '---\ncontroller_hosts:' to the top of the file content
-      ansible.builtin.set_fact:
-        updated_content: |
-          ---
-          controller_hosts:
-          {{ updated_content }}
-
-    - name: Write the updated content back to hosts.yaml
-      ansible.builtin.copy:
-        dest: "{{ output_path }}/hosts.yaml"
-        content: "{{ updated_content }}"
-        mode: '0644'
-
-    - name: Remove lines containing "..."
-      ansible.builtin.lineinfile:
-        path: "{{ output_path }}/job_templates.yaml"
-        regexp: "\\.\\.\\."
-        state: absent
-
-    - name: Git Configure [username]
-      ansible.builtin.command: "git config --global user.name \"rpriley5\""
-      args:
-        chdir: "/home/{{ ansible_user }}/ansible/CaC"
-      register: git_username_config_output
-      changed_when: git_username_config_output.rc != 0
-
-    - name: Git Configure [email]
-      ansible.builtin.command: "git config --global user.email \"rp.riley5@gmail.com\""
-      args:
-        chdir: "/home/{{ ansible_user }}/ansible/CaC"
-      register: git_email_config_output
-      changed_when: git_email_config_output.rc != 0
-
-    - name: Git stage
-      ansible.builtin.command: "git add ."
-      args:
-        chdir: "/home/{{ ansible_user }}/ansible/CaC"
-      register: git_stage_output
-      changed_when: git_stage_output.rc != 0
-
-    - name: Git Commit and Push
-      block:
-        - name: Git Commit
-          ansible.builtin.command: "git commit -m \"auto-commit by AAP\""
-          args:
-            chdir: "/home/{{ ansible_user }}/ansible/CaC"
-          register: commit_output
-          changed_when: commit_output.rc != 1
-
-        - name: Git push
-          # ansible.builtin.command: "git push origin main"
-          ansible.builtin.command: "git push git@github.com:rpriley5/CaC.git"
-          args:
-            chdir: "/home/{{ ansible_user }}/ansible/CaC"
-          register: push_output
-          changed_when: push_output.rc != 0
-      ignore_errors: true
+    - infra.aap_configuration_extended.filetree_create
 
 ...
