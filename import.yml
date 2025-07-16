@@ -7,7 +7,6 @@
     username: "USERNAME"
     password: "PASSWORD"
     import_controller_host: "IMPORT_CONTROLLER_HOST"
-    import_creds: false
 
     controller_username: "{{ username }}"
     controller_password: "{{ password }}"
