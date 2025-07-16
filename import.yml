@@ -18,7 +18,7 @@
     - {role: infra.controller_configuration.credential_types, when: controller_credential_types is defined}
     - {role: infra.controller_configuration.settings, when: controller_settings is defined}
     - {role: infra.controller_configuration.organizations, when: controller_organizations is defined}
-    - {role: infra.controller_configuration.credentials, when: import_creds and controller_credentials is defined, ignore_errors: true, no_log: false}
+    - {role: infra.controller_configuration.credentials, when: import_creds and controller_credentials is defined}
     - {role: infra.controller_configuration.projects, when: controller_projects is defined}
     - {role: infra.controller_configuration.execution_environments, when: controller_execution_environments is defined, ignore_errors: true}
     - {role: infra.controller_configuration.inventories, when: controller_inventories is defined}
