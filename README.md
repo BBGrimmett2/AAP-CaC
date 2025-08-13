@@ -1,4 +1,4 @@
-# AAP-CaC (AAP 2.4/AWX ➜ AAP 2.5) — Community Migration Starter
+# AAP-CaC (AAP 2.4/AWX ➜ AAP 2.5) — Migration Starter Pack
 
 > **Important support notice**  
 > This repository is a **community starting point** for moving Automation Controller objects that are exportable via **Config-as-Code (CaC)** from **AAP 2.4 or AWX** into **AAP 2.5**.  
