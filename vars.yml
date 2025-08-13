@@ -1,16 +1,16 @@
-## 2.4 / AWX
+# --- Source (AAP 2.4 or AWX) ---
 controller_username: "admin" # MUST BE ADMIN USER
 controller_password: "xxxxxxxxxxxxxx"
-controller_hostname: "aap.example.com" # OR "awx.example.com"
+controller_hostname: "aap.example.com" # DO NOT INCLUDE http:// or https://
 controller_api_plugin: awx.awx.controller_api
 
 ## 2.5
 aap_username: "admin" # MUST BE ADMIN USER
 aap_password: "xxxxxxxxxxxxxx"
-aap_hostname: "aap.example.com"
+aap_hostname: "aap.example.com" # DO NOT INCLUDE http:// or https://
 
 # General
-output_path: "./filetree_output"
+output_path: "./exports"
 flatten_output: true
 aap_validate_certs: "false"
 controller_validate_certs: "false"
